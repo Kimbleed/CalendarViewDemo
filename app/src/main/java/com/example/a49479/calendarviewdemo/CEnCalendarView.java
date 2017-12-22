@@ -112,4 +112,21 @@ CEnCalendarView extends LinearLayout {
     }
 
 
+    /**
+     * 获取当前高亮（选择）日期
+     * @return
+     */
+    public CalendarDate getChoosedDate(){
+        return mCalendarDay.get(mCalendarDayAdapter.getChooseDate());
+    }
+
+    /**
+     * 点击日期时的监听
+     * @param listener
+     */
+    public void setOnChooseListener(CEn7DayRecyclerAdapter.CEn7DayListener listener){
+        mCalendarDayAdapter.setListener(listener);
+    }
+
+
 }
