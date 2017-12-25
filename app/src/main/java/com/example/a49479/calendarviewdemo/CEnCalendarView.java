@@ -47,9 +47,9 @@ CEnCalendarView extends LinearLayout {
     /**
      * 初始化View
      */
-    public void initView(Context context){
+    public void initView(Context context) {
         setOrientation(LinearLayout.VERTICAL);
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_cen_calendar_view,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_cen_calendar_view, null);
         addView(view);
         tv_calendar = (TextView) view.findViewById(R.id.tv_calendar);
         customRecycler_calendar = (RecyclerView) view.findViewById(R.id.customRecycler_calendar);
@@ -59,7 +59,7 @@ CEnCalendarView extends LinearLayout {
     /**
      * 初始化RecyclerView
      */
-    public void initRecycler(Context context){
+    public void initRecycler(Context context) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         customRecycler_calendar.setLayoutManager(linearLayoutManager);
 
@@ -114,18 +114,50 @@ CEnCalendarView extends LinearLayout {
 
     /**
      * 获取当前高亮（选择）日期
+     *
      * @return
      */
-    public CalendarDate getChoosedDate(){
+    public CalendarDate getChoosedDate() {
         return mCalendarDay.get(mCalendarDayAdapter.getChooseDate());
     }
 
     /**
      * 点击日期时的监听
+     *
      * @param listener
      */
-    public void setOnChooseListener(CEn7DayRecyclerAdapter.CEn7DayListener listener){
+    public void setOnChooseListener(CEn7DayRecyclerAdapter.CEn7DayListener listener) {
         mCalendarDayAdapter.setListener(listener);
+    }
+
+    /**
+     * 设置为特殊日期
+     */
+    public void setSpecialDate(int position) {
+        mCalendarDayAdapter.setHaveDay(position);
+    }
+
+    /**
+     * 获取日期list
+     */
+    public List<CalendarDate> getCalendarDays() {
+        return mCalendarDay;
+    }
+
+    /**
+     * 通过CalendarDate 来获取 index
+     * @param date
+     * @return
+     */
+    public int getCalendarDayIndex(CalendarDate date) {
+        int size = mCalendarDay.size();
+        for (int i = 0; i < size; i++) {
+            CalendarDate calendarDate = mCalendarDay.get(i);
+            if (calendarDate.time == date.time) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 
