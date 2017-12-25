@@ -14,16 +14,39 @@ import java.util.List;
 
 /**
  * Created by 49479 on 2017/12/21.
+ *
+ * 横条展示一周的日历控件
  */
 
 public class
 
 CEnCalendarView extends LinearLayout {
 
+    /**
+     * 布局
+     */
     TextView tv_calendar;
     RecyclerView customRecycler_calendar;
+
+
+    /**
+     * List相关
+     */
     CEn7DayRecyclerAdapter mCalendarDayAdapter;
     List<CalendarDate> mCalendarDay = new ArrayList<>();
+
+    /**
+     * 数值设置
+     */
+    public static final int DEFAULT_SHOW_DAYS = 60;     //默认展示天数
+    private int mShowDays = DEFAULT_SHOW_DAYS;          //展示天数
+
+    private long mLastDayTime = System.currentTimeMillis(); //最后一天，默认今天
+
+    private static final String[] arrMonth = new String[]{"一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月",};
+
+    public static final long ONE_DAY_TIME = 1000L * 60L * 60L * 24L;
+
 
     public CEnCalendarView(Context context) {
         super(context);
@@ -39,10 +62,6 @@ CEnCalendarView extends LinearLayout {
         super(context, attrs, defStyleAttr);
         initView(context);
     }
-
-    private static final String[] arrMonth = new String[]{"一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月",};
-
-    public static final long ONE_DAY_TIME = 1000L * 60L * 60L * 24L;
 
     /**
      * 初始化View
@@ -64,12 +83,13 @@ CEnCalendarView extends LinearLayout {
         customRecycler_calendar.setLayoutManager(linearLayoutManager);
 
         //显示最近60天
-        for (long i = 0; i < 60; i++) {
-            long time = System.currentTimeMillis() - ONE_DAY_TIME * i;
+        for (long i = 0; i < mShowDays; i++) {
+            long time = mLastDayTime - ONE_DAY_TIME * i;
             CalendarDate date = DateUtils.getCalendarDate(time);
             mCalendarDay.add(0, date);
         }
         mCalendarDayAdapter = new CEn7DayRecyclerAdapter(context, mCalendarDay);
+
         //选择（高亮）某一日期
         customRecycler_calendar.setAdapter(mCalendarDayAdapter);
         customRecycler_calendar.scrollToPosition(mCalendarDay.size() - 1);
@@ -153,7 +173,8 @@ CEnCalendarView extends LinearLayout {
         int size = mCalendarDay.size();
         for (int i = 0; i < size; i++) {
             CalendarDate calendarDate = mCalendarDay.get(i);
-            if (calendarDate.time == date.time) {
+            //判定是否同一天
+            if (calendarDate.getDateFormat("yyyyMMdd").equals(date.getDateFormat("yyyyMMdd"))) {
                 return i;
             }
         }
