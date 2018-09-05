@@ -15,6 +15,14 @@
         android:textSize="12dp" />
 
     <View
+        android:id="@+id/view_locate"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/tv_way"
+        android:layout_centerInParent="true"
+        android:background="@drawable/drawable_circle_border" />
+
+    <View
         android:id="@+id/view_choose"
         android:layout_width="35dp"
         android:layout_height="35dp"

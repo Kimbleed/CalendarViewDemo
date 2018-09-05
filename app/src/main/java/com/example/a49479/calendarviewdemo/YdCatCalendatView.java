@@ -3,7 +3,6 @@ package com.example.a49479.calendarviewdemo;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -14,12 +13,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class YdCatCalendatView  extends LinearLayout {
+public class YdCatCalendatView extends LinearLayout {
 
     /**
      * 布局
      */
     TextView tv_calendar;
+    View btn_calendar_left_page;
+    View btn_calendar_right_page;
     RecyclerView customRecycler_calendar;
 
     /**
@@ -64,6 +65,31 @@ public class YdCatCalendatView  extends LinearLayout {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_cen_calendar_view_new, null);
         addView(view);
         tv_calendar = (TextView) view.findViewById(R.id.tv_calendar);
+        btn_calendar_left_page = view.findViewById(R.id.btn_calendar_left_page);
+        btn_calendar_right_page = view.findViewById(R.id.btn_calendar_right_page);
+
+        btn_calendar_left_page.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CalendarDate currentMonthDay = mCalendarDay.get(mCalendarDay.size() / 2);
+                CalendarDate previousMonthDay = DateUtils.getCalendarDate(currentMonthDay.time-ONE_DAY_TIME*30);
+                mCalendarDay.clear();
+                initCalender(previousMonthDay);
+                mCalendarDayAdapter.reset(previousMonthDay.month);
+            }
+        });
+
+        btn_calendar_right_page.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CalendarDate currentMonthDay = mCalendarDay.get(mCalendarDay.size() / 2);
+                CalendarDate nextMonthDay =  DateUtils.getCalendarDate(currentMonthDay.time+ONE_DAY_TIME*30);
+                mCalendarDay.clear();
+                initCalender(nextMonthDay);
+                mCalendarDayAdapter.reset(nextMonthDay.month);
+            }
+        });
+
         customRecycler_calendar = (RecyclerView) view.findViewById(R.id.customRecycler_calendar);
         initRecycler(context);
     }
@@ -72,47 +98,51 @@ public class YdCatCalendatView  extends LinearLayout {
      * 初始化RecyclerView
      */
     public void initRecycler(Context context) {
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context,7);
-        customRecycler_calendar.setLayoutManager(layoutManager);
-
         CalendarDate now = DateUtils.getCalendarDate(mCurrentTimeMillis);
-        tv_calendar.setText(now.year+"-"+now.month);
-        CalendarDate firstDay = DateUtils.getCalendarDate(mCurrentTimeMillis-(Integer.parseInt(now.day)-1)*ONE_DAY_TIME);
+
+        initCalender(now);
+
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 7);
+        customRecycler_calendar.setLayoutManager(layoutManager);
+        mCalendarDayAdapter = new CEn7DayRecyclerAdapterNew(context, mCalendarDay, now);
+
+        //选择（高亮）某一日期
+        customRecycler_calendar.setAdapter(mCalendarDayAdapter);
+
+        mCalendarDayAdapter.chooseDate(now);
+    }
+
+    private void initCalender(CalendarDate calendarDate) {
+
+        int month = Integer.parseInt(calendarDate.month) + 1;
+        tv_calendar.setText(calendarDate.year + "-" + (month <= 9 ? "0" + month : "" + month));
+        CalendarDate firstDay = DateUtils.getCalendarDate(calendarDate.time - (Integer.parseInt(calendarDate.day) - 1) * ONE_DAY_TIME);
         int plus = Integer.parseInt(firstDay.way);
 
-        mShowDaysBeforeNow = (plus +Integer.parseInt(now.day)-1);
+        mShowDaysBeforeNow = (plus + Integer.parseInt(calendarDate.day) - 1);
         for (long i = 0; i < mShowDaysBeforeNow; i++) {
-            long time = mCurrentTimeMillis - ONE_DAY_TIME * i;
+            long time = calendarDate.time - ONE_DAY_TIME * i;
             CalendarDate date = DateUtils.getCalendarDate(time);
             mCalendarDay.add(0, date);
         }
 
-        for(int j=0;;j++){
-            long time = mCurrentTimeMillis + ONE_DAY_TIME * (j+1);
+        for (int j = 0; ; j++) {
+            long time = calendarDate.time + ONE_DAY_TIME * (j + 1);
             CalendarDate date = DateUtils.getCalendarDate(time);
-            if(now.month.equals(date.month)) {
+            if (calendarDate.month.equals(date.month)) {
                 mCalendarDay.add(date);
-            }
-            else{
+            } else {
                 break;
             }
         }
 
-        CalendarDate last = mCalendarDay.get(mCalendarDay.size()-1);
-        int plusAfter = 7-Integer.parseInt(last.way);
-        for(int k = 0;k<plusAfter;k++){
-            long time = last.time + ONE_DAY_TIME * (k+1);
+        CalendarDate last = mCalendarDay.get(mCalendarDay.size() - 1);
+        int plusAfter = 7 - Integer.parseInt(last.way);
+        for (int k = 0; k < plusAfter; k++) {
+            long time = last.time + ONE_DAY_TIME * (k + 1);
             CalendarDate date = DateUtils.getCalendarDate(time);
             mCalendarDay.add(date);
         }
-
-        mCalendarDayAdapter = new CEn7DayRecyclerAdapterNew(context, mCalendarDay,now);
-
-        //选择（高亮）某一日期
-        customRecycler_calendar.setAdapter(mCalendarDayAdapter);
-        customRecycler_calendar.scrollToPosition(mCalendarDay.size() - 1);
-        mCalendarDayAdapter.chooseDate(now);
     }
 
 
@@ -137,8 +167,12 @@ public class YdCatCalendatView  extends LinearLayout {
     /**
      * 设置为特殊日期
      */
-    public void setSpecialDate(int position) {
-        mCalendarDayAdapter.setHaveDay(position);
+    public void setHaveRecordDay(int position) {
+        mCalendarDayAdapter.setHaveRecordDay(position);
+    }
+
+    public void setHaveEventDay(int position) {
+        mCalendarDayAdapter.setHaveEventDay(position);
     }
 
     /**
@@ -150,6 +184,7 @@ public class YdCatCalendatView  extends LinearLayout {
 
     /**
      * 通过CalendarDate 来获取 index
+     *
      * @param date
      * @return
      */

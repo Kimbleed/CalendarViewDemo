@@ -32,12 +32,12 @@
                 android:textSize="15sp" />
 
             <RelativeLayout
+                android:id="@+id/btn_calendar_left_page"
                 android:layout_width="40dp"
                 android:layout_height="35dp"
                 android:layout_toLeftOf="@id/tv_calendar">
 
                 <ImageView
-                    android:id="@+id/btn_calendar_left_page"
                     android:layout_width="wrap_content"
                     android:layout_height="15sp"
                     android:layout_centerInParent="true"
@@ -45,12 +45,12 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/btn_calendar_right_page"
                 android:layout_width="40dp"
                 android:layout_height="35dp"
                 android:layout_toRightOf="@id/tv_calendar">
 
                 <ImageView
-                    android:id="@+id/btn_calendar_right_page"
                     android:layout_width="wrap_content"
                     android:layout_height="15sp"
                     android:layout_centerInParent="true"
