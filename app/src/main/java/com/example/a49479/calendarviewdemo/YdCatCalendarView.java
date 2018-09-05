@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class YdCatCalendatView extends LinearLayout {
+public class YdCatCalendarView extends LinearLayout {
 
     /**
      * 布局
@@ -42,17 +42,17 @@ public class YdCatCalendatView extends LinearLayout {
 
     public static final long ONE_DAY_TIME = 1000L * 60L * 60L * 24L;
 
-    public YdCatCalendatView(Context context) {
+    public YdCatCalendarView(Context context) {
         super(context);
         initView(context);
     }
 
-    public YdCatCalendatView(Context context, @Nullable AttributeSet attrs) {
+    public YdCatCalendarView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initView(context);
     }
 
-    public YdCatCalendatView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public YdCatCalendarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context);
     }
@@ -173,6 +173,14 @@ public class YdCatCalendatView extends LinearLayout {
 
     public void setHaveEventDay(int position) {
         mCalendarDayAdapter.setHaveEventDay(position);
+    }
+
+    public void setHaveRecordDay(CalendarDate date){
+        mCalendarDayAdapter.setHaveRecordDay(date);
+    }
+
+    public void setHaveEventDay(CalendarDate date) {
+        mCalendarDayAdapter.setHaveEventDay(date);
     }
 
     /**

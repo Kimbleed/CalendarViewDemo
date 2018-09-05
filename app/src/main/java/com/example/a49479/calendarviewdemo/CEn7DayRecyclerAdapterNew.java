@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import net.qiujuer.genius.ui.widget.Button;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -146,7 +148,7 @@ public class CEn7DayRecyclerAdapterNew extends RecyclerView.Adapter<CEn7DayRecyc
             holder.view_flag_2.setVisibility(View.INVISIBLE);
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseDate(position);
@@ -173,9 +175,11 @@ public class CEn7DayRecyclerAdapterNew extends RecyclerView.Adapter<CEn7DayRecyc
             view_locate = itemView.findViewById(R.id.view_locate);
             view_flag_1 = itemView.findViewById(R.id.view_flag_1);
             view_flag_2 = itemView.findViewById(R.id.view_flag_2);
+            btn =  (Button) itemView.findViewById(R.id.btn);
         }
 
         View itemView;
+        Button btn;
         TextView tv_date;
         TextView tv_way;
         View view_choose;

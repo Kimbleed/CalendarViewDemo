@@ -30,7 +30,7 @@ android {
         //（我们只关心classes.jar这个文件）
         include('classes.jar')
         //重命名
-        rename ('classes.jar', 'mysdk.jar')
+        rename('classes.jar', 'mysdk.jar')
     }
 
     makeJar.dependsOn(build)
@@ -44,5 +44,6 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'net.qiujuer.genius:ui:2.0.0'
     testCompile 'junit:junit:4.12'
 }

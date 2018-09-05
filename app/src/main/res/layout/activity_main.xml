@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.a49479.calendarviewdemo.MainActivity">
 
-    <com.example.a49479.calendarviewdemo.YdCatCalendatView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never"></com.example.a49479.calendarviewdemo.YdCatCalendatView>
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>
