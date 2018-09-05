@@ -12,7 +12,6 @@
         android:gravity="center"
         android:visibility="gone"
         android:textColor="@color/title_text_color_grey1"
-        android:layout_marginTop="20dp"
         android:textSize="12dp" />
 
     <View
@@ -25,28 +24,38 @@
 
     <TextView
         android:id="@+id/tv_date"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/tv_way"
         android:gravity="center"
         android:layout_centerInParent="true"
         android:text="123"
-        android:textColor="@color/loock_yellow_alpha"
-        android:textSize="12dp" />
+        android:paddingBottom="3dp"
+        android:textColor="#444444"
+        android:textSize="14dp" />
 
-    <View
-        android:id="@+id/view_exist"
-        android:layout_width="4dp"
-        android:layout_height="4dp"
-        android:layout_below="@id/tv_date"
-        android:layout_marginBottom="10dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/drawable_circle" />
 
     <LinearLayout
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_below="@id/tv_date"
+        android:layout_marginTop="5dp"
+        >
+        <View
+            android:id="@+id/view_flag_1"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:background="@drawable/drawable_circle_green"
+            android:layout_marginRight="2dp"/>
+
+        <View
+            android:id="@+id/view_flag_2"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:layout_marginLeft="2dp"
+            android:background="@drawable/drawable_circle_red" />
 
     </LinearLayout>
 </RelativeLayout>
