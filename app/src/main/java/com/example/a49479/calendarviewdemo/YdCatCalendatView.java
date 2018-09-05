@@ -60,7 +60,7 @@ public class YdCatCalendatView extends LinearLayout {
     /**
      * 初始化View
      */
-    public void initView(Context context) {
+    private void initView(Context context) {
         setOrientation(LinearLayout.VERTICAL);
         View view = LayoutInflater.from(context).inflate(R.layout.layout_cen_calendar_view_new, null);
         addView(view);
@@ -75,7 +75,7 @@ public class YdCatCalendatView extends LinearLayout {
                 CalendarDate previousMonthDay = DateUtils.getCalendarDate(currentMonthDay.time-ONE_DAY_TIME*30);
                 mCalendarDay.clear();
                 initCalender(previousMonthDay);
-                mCalendarDayAdapter.reset(previousMonthDay.month);
+                mCalendarDayAdapter.resetWithNotifyData(previousMonthDay.year,previousMonthDay.month);
             }
         });
 
@@ -86,7 +86,7 @@ public class YdCatCalendatView extends LinearLayout {
                 CalendarDate nextMonthDay =  DateUtils.getCalendarDate(currentMonthDay.time+ONE_DAY_TIME*30);
                 mCalendarDay.clear();
                 initCalender(nextMonthDay);
-                mCalendarDayAdapter.reset(nextMonthDay.month);
+                mCalendarDayAdapter.resetWithNotifyData(nextMonthDay.year,nextMonthDay.month);
             }
         });
 
@@ -97,7 +97,7 @@ public class YdCatCalendatView extends LinearLayout {
     /**
      * 初始化RecyclerView
      */
-    public void initRecycler(Context context) {
+    private void initRecycler(Context context) {
         CalendarDate now = DateUtils.getCalendarDate(mCurrentTimeMillis);
 
         initCalender(now);

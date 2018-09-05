@@ -54,4 +54,8 @@ public class CalendarDate {
     public String getDateFormat(String format){
         return DateUtils.getDateFromNum(time,format);
     }
+
+    public boolean equalsDate(CalendarDate date){
+        return this.year.equals(date.year) && this.month.equals(date.month) && this.day.equals(date.day);
+    }
 }
